@@ -1,0 +1,91 @@
+GET 
+
+/movies (All movies): 
+curl localhost:9090/movies | jq
+[
+  {
+    "ID": 1,
+    "CreatedAt": "0001-01-01T00:00:00Z",
+    "UpdatedAt": "0001-01-01T00:00:00Z",
+    "DeletedAt": null,
+    "title": "Movie 1",
+    "release_date": "2022-01-23T00:00:00+03:00"
+  },
+  ...
+}
+
+
+/movies/{id} (Movie by id):
+curl localhost:9090/movies/5 | jq
+{
+  "ID": 1,
+  "CreatedAt": "0001-01-01T00:00:00Z",
+  "UpdatedAt": "0001-01-01T00:00:00Z",
+  "DeletedAt": null,
+  "title": "Movie 1",
+  "release_date": "2022-01-23T00:00:00+03:00"
+}
+
+/reviews (All reviews):
+curl localhost:9090/reviews | jq
+[
+  {
+    "ID": 6,
+    "CreatedAt": "0001-01-01T00:00:00Z",
+    "UpdatedAt": "0001-01-01T00:00:00Z",
+    "DeletedAt": null,
+    "userId": 1,
+    "movieId": 1,
+    "rating": 4.5,
+    "reviewText": "Great movie! Highly recommended.",
+    "timestamp": "2022-01-23T12:34:56Z"
+  },
+  ...
+]
+
+/reviews/{id} (Review by id)
+curl localhost:9090/reviews/11 | jq
+{
+  "ID": 6,
+  "CreatedAt": "0001-01-01T00:00:00Z",
+  "UpdatedAt": "0001-01-01T00:00:00Z",
+  "DeletedAt": null,
+  "userId": 1,
+  "movieId": 1,
+  "rating": 4.5,
+  "reviewText": "Great movie! Highly recommended.",
+  "timestamp": "2022-01-23T12:34:56Z"
+}
+
+
+/movie/{movieId}/{reviewId} (Review by movie id)
+curl localhost:9090/movies/5/reviews | jq
+[
+  {
+    "ID": 6,
+    "CreatedAt": "0001-01-01T00:00:00Z",
+    "UpdatedAt": "0001-01-01T00:00:00Z",
+    "DeletedAt": null,
+    "userId": 1,
+    "movieId": 1,
+    "rating": 4.5,
+    "reviewText": "Great movie! Highly recommended.",
+    "timestamp": "2022-01-23T12:34:56Z"
+  },
+  ...
+]
+
+POST
+
+/reviews (Add review)
+curl localhost:9090/reviews -X POST -d '{"movieID": 5, "rating": 4, "reviewText": "Cool"}'
+
+PUT
+
+/reviews/{id} (Review by id)
+curl localhost:9090/reviews/12 -X PUT -d '{"rating": 4}'
+
+DELETE
+
+/reviews/{id} (Review by id)
+curl localhost:9090/reviews/12 -X DELETE -v | jq
